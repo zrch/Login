@@ -15,13 +15,7 @@ using System.Resources;
 namespace Login
 {
     public class Program : Form
- //static class Program 
         {
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
-        /// 
- 
 
         [STAThread]
         public static void Main()
@@ -29,13 +23,11 @@ namespace Login
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
         
-
-           // Application.Run(new Form1());
             Application.Run(new Program());
         }
 
         private NotifyIcon  trayIcon;
-        //private ContextMenu trayMenu;
+
         private ContextMenuStrip trayMenu;
 
         public string User1 = "";
@@ -65,15 +57,7 @@ namespace Login
             trayMenu.Items.Add("Uninstall", uninstallImage).Click += new EventHandler(Uninstall_Click);
             trayMenu.Items.Add("About", aboutImage).Click += new EventHandler(About_Click);
             trayMenu.Items.Add("Exit", exitImage).Click += new EventHandler(Exit_Click);
-           /* trayMenu = new ContextMenu();
-            
-            trayMenu.MenuItems.Add("Login", OnLogin);
-            trayMenu.MenuItems.Add("Kontoinformation", OnInfo);
-            trayMenu.MenuItems.Add("Ta bort", OnUninstall);
-            trayMenu.MenuItems.Add("About", OnAbout);
-            trayMenu.MenuItems.Add("Exit", OnExit);
-       
-   */
+
             trayIcon = new NotifyIcon();
             Icon icnNormal;
          
@@ -88,7 +72,7 @@ namespace Login
             trayIcon.Icon = icnNormal;
 
             trayIcon.ContextMenuStrip = trayMenu;
-            //trayIcon.ContextMenu = trayMenu;
+
             trayIcon.Visible     = true;
             
             StartUp();
@@ -112,17 +96,17 @@ namespace Login
             textBox2.PasswordChar = '*';
 
             Button buttonOk = new Button();
-           // Button buttonCancel = new Button();
+
 
             form.Text = "Jensen AutoLogin - Kontoinformation";
             label.Text = "Användarnamn:";
-            //textBox.Text = value;
+ 
             label2.Text = "Lösenord:";
-           // textBox2.Text = "Lösenord";
+ 
             buttonOk.Text = "OK";
-            //buttonCancel.Text = "Cancel";
+        
             buttonOk.DialogResult = DialogResult.OK;
-            //buttonCancel.DialogResult = DialogResult.Cancel;
+    
 
             label.SetBounds(9, 20, 220, 13);
             textBox.SetBounds(12, 36, 220, 20);
@@ -131,7 +115,7 @@ namespace Login
             textBox2.SetBounds(12, 76, 220, 20);
 
             buttonOk.SetBounds(12, 100, 75, 23);
-            //buttonCancel.SetBounds(110, 95, 75, 23);
+
 
             label.AutoSize = true;
 
@@ -144,7 +128,7 @@ namespace Login
             form.MinimizeBox = false;
             form.MaximizeBox = false;
             form.AcceptButton = buttonOk;
-           // form.CancelButton = buttonCancel;
+      
 
             DialogResult dialogResult = form.ShowDialog();
 
@@ -253,10 +237,6 @@ namespace Login
                 ((HttpWebRequest)rqst).UserAgent = UserAgent;
                 ((HttpWebRequest)rqst).CookieContainer = cookieContainer;
 
-                // only needed, if you use HTTP AUTH
-                //CredentialCache creds = new CredentialCache();
-                //creds.Add(new Uri(url), "Basic", new NetworkCredential(this.Uname, this.Pwd));
-                //rqst.Credentials = creds;
          
             rqst.Method = "POST";
 
@@ -264,7 +244,7 @@ namespace Login
 
                 if (!String.IsNullOrEmpty(postdata))
                 {
-                    //rqst.ContentType = "application/xml";
+              
                     rqst.ContentType = "application/x-www-form-urlencoded";
 
                     byte[] byteData = UTF8Encoding.UTF8.GetBytes(postdata);
@@ -290,7 +270,7 @@ namespace Login
           
             string strRsps = rsps.ReadToEnd();
 
-            //om den hittar 'loginform' så har inloggningen misslyckats
+ 
             int loggedIn = strRsps.IndexOf("loginform");
 
             if (loggedIn != -1)
@@ -348,20 +328,7 @@ namespace Login
             ((HttpWebRequest)rqst3).KeepAlive = true;
             StreamReader rsps3 = new StreamReader(rqst3.GetResponse().GetResponseStream());
             string strRsps3 = rsps3.ReadToEnd();
-            ///////////////DEBUG////////////////////////////////////////////////////
 
-            WebRequest rqst6 = HttpWebRequest.Create("https://yh.jenseneducation.se/docs/profil/default.asp?");
-            ((HttpWebRequest)rqst6).Referer = "https://yh.jenseneducation.se/default.asp";
-            ((HttpWebRequest)rqst6).Accept = Accept;
-            ((HttpWebRequest)rqst6).UserAgent = UserAgent;
-            ((HttpWebRequest)rqst6).CookieContainer = cookieContainer;
-
-            rqst6.Method = "GET";
-
-
-            ((HttpWebRequest)rqst6).KeepAlive = true;
-            StreamReader rsps6 = new StreamReader(rqst6.GetResponse().GetResponseStream());
-            string strRsps6 = rsps6.ReadToEnd();
             ///////////////SLEEP///////////////////////////////////////////////////
 
             Random random = new Random();
@@ -383,21 +350,6 @@ namespace Login
             ((HttpWebRequest)rqst4).KeepAlive = true;
             StreamReader rsps4 = new StreamReader(rqst4.GetResponse().GetResponseStream());
             string strRsps4 = rsps4.ReadToEnd();
-
-            ///////////////DEBUG////////////////////////////////////////////////////
-
-            WebRequest rqst5 = HttpWebRequest.Create("https://yh.jenseneducation.se/docs/profil/default.asp?");
-            ((HttpWebRequest)rqst5).Referer = "https://yh.jenseneducation.se/default.asp";
-            ((HttpWebRequest)rqst5).Accept = Accept;
-            ((HttpWebRequest)rqst5).UserAgent = UserAgent;
-            ((HttpWebRequest)rqst5).CookieContainer = cookieContainer;
-
-            rqst5.Method = "GET";
-
-
-            ((HttpWebRequest)rqst5).KeepAlive = true;
-            StreamReader rsps5 = new StreamReader(rqst5.GetResponse().GetResponseStream());
-            string strRsps5 = rsps5.ReadToEnd();
 
             isLogin = false;
         }
@@ -471,75 +423,12 @@ namespace Login
 
             MessageBox.Show("Kontoinformation sparad!", "Jensen AutoLogin - Kontoinformation");
         }
-        /*
-
-        private void OnLogin(object sender, EventArgs e)
-        {
-  
-            Thread thread = new Thread(() => Login(User1, Pass1));
-            thread.Start();
-
-            Thread.Sleep(30);
-
-        }
-
-        private void OnUninstall(object sender, EventArgs e)
-        {
-            RegistryKey regKey = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", true);
-            regKey.DeleteValue("Jensen AutoLogin");
-
-            regKey = Registry.CurrentUser.OpenSubKey("Software\\Microsoft", true);
-            regKey.DeleteSubKey("Jensen AutoLogin");
-        }
-
-        private void OnExit(object sender, EventArgs e)
-        {
-         
-            loginThreadStop = true;
-            Thread.Sleep(100);
-
-            Application.Exit();
-        }
-
-        private void OnAbout(object sender, EventArgs e)
-        {
-            MessageBox.Show("©2012 by Mattias Karlsson. All rights reserved", "Jensen Autologin");
-        }
-
-        private void OnInfo(object sender, EventArgs e)
-        {
-            String value = "";
-
-            UserInfo(ref value);
-
-            String[] credentials = value.Split(':');
-
-            User1 = credentials[0];
-            Pass1 = credentials[1];
-
-            RegistryKey regKey = Registry.CurrentUser.OpenSubKey("Software\\Microsoft", true);
-            regKey = regKey.OpenSubKey("Jensen AutoLogin", true);
-
-            String tmpvar =  User1;
-            String tmpvar2 = "";
-            byte[] data1 = ASCIIEncoding.ASCII.GetBytes(tmpvar);
-            tmpvar2 = Convert.ToBase64String(data1);
-            regKey.SetValue("User", tmpvar2);
-
-            tmpvar = Pass1;
-            data1 = ASCIIEncoding.ASCII.GetBytes(tmpvar);
-            tmpvar2 = Convert.ToBase64String(data1);
-            regKey.SetValue("Pass", tmpvar2);
-
-            regKey.Close();
-        }
-         */
 
         protected override void Dispose(bool isDisposing)
         {
             if (isDisposing)
             {
-                // Release the icon resource.
+               
                 trayIcon.Dispose();
             }
 
@@ -549,9 +438,7 @@ namespace Login
         private void InitializeComponent()
         {
             this.SuspendLayout();
-            // 
-            // Program
-            // 
+
             this.ClientSize = new System.Drawing.Size(284, 262);
             this.Name = "Program";
             this.Load += new System.EventHandler(this.Program_Load);
